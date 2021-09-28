@@ -1,4 +1,5 @@
 const User = require("../models/User.model");
+const Cart = require("../models/Cart.model");
 const bcryptjs = require("bcryptjs");
 const saltRounds = 10;
 
@@ -10,8 +11,6 @@ const postLogin = async (req, res) => {
     if (!email || !password || !email.length || !password.length) throw new Error("Uno o mas campos son erroneos");
     const foundUser = await User.findOne({ email });
 
-    console.log(foundUser);
-
     if (!foundUser) throw new Error("El usuario o la contraseña son erróneas. Intenta nuevamente");
 
     const passwordMath = await bcryptjs.compareSync(password, foundUser.passwordHash);
@@ -20,6 +19,14 @@ const postLogin = async (req, res) => {
 
     req.session.currentUser = foundUser;
 
+    const findCart = await Cart.findOne({ user: foundUser._id });
+    if (!findCart) {
+      await Cart.create({
+        user: foundUser._id,
+        status: 0,
+        items: [],
+      });
+    }
     res.redirect("/");
   } catch (error) {
     console.log(error.message);
@@ -42,15 +49,13 @@ const postSignUp = async (req, res) => {
     const salt = await bcryptjs.genSalt(saltRounds);
     const hashedPassword = await bcryptjs.hash(password, salt);
     console.log(firstName, lastName, email, password);
-    const newUser = await User.create({
+    await User.create({
       name: firstName,
       lastName: lastName,
       email: email,
       passwordHash: hashedPassword,
       roles: ["customer"],
     });
-
-    console.log(newUser);
 
     res.redirect("/auth/login");
   } catch (error) {
