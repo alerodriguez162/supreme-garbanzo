@@ -58,7 +58,12 @@ const postSignUp = async (req, res) => {
   }
 };
 
-const logout = (req, res) => {};
+const logout = (req, res) => {
+  req.session.destroy((err) => {
+    if (err) console.log(err);
+    res.redirect("/");
+  });
+};
 
 module.exports = {
   getLoginForm,

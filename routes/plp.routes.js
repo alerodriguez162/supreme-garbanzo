@@ -1,8 +1,7 @@
 const router = require("express").Router();
 const routeGuards = require("../middlewares/route-guard");
+const plpController = require("../controllers/plp.controller");
 
-router.get("/", (req, res, next) => {
-  res.render("plp/plp");
-});
+router.get("/", plpController.getProducts);
 
 module.exports = router;

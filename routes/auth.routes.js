@@ -12,6 +12,6 @@ router.post("/signup", authController.postSignUp);
 router.get("/forgotpassword", authController.getForgotPasswordForm);
 router.post("/forgotpassword", authController.postForgotPassword);
 
-router.post("/logout", authController.logout);
+router.post("/logout", routeGuards.isLoggedIn, authController.logout);
 
 module.exports = router;

@@ -1,0 +1,1 @@
+const getHomePage = (req, res) => {};
