@@ -25,6 +25,8 @@ const projectName = "la-casa-del-metronomo";
 
 const capitalized = (string) => string[0].toUpperCase() + string.slice(1).toLowerCase();
 
+hbs.registerPartials(__dirname + "/views/partials");
+
 hbs.registerHelper("formatDate", function (dateString) {
   return new hbs.SafeString(moment().startOf(moment(dateString).format("MMMM Do YYYY, h:mm:ss a")).fromNow());
 });
@@ -39,6 +41,24 @@ app.locals.title = `${capitalized(projectName)}`;
 // 👇 Start handling routes here
 const index = require("./routes/index.routes");
 app.use("/", index);
+
+const pdp = require("./routes/pdp.routes");
+app.use("/pdp", pdp);
+
+const plp = require("./routes/plp.routes");
+app.use("/plp", plp);
+
+const auth = require("./routes/auth.routes");
+app.use("/auth", auth);
+
+const cart = require("./routes/cart.routes");
+app.use("/cart", cart);
+
+const checkout = require("./routes/checkout.routes");
+app.use("/checkout", checkout);
+
+const user = require("./routes/user.routes");
+app.use("/user", user);
 
 // ❗ To handle errors. Routes that don't exist or errors that you handle in specific routes
 require("./error-handling")(app);
