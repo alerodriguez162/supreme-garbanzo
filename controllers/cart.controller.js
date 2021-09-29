@@ -53,6 +53,7 @@ const getCart = async (req, res) => {
     const cartFind = await Cart.findOne({ user: currentUser._id }).populate("products.product");
 
     res.status(200).json(cartFind);
+    // res.render("cart/cart", cartFind);
   } catch (error) {}
 };
 

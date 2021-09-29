@@ -15,15 +15,6 @@ const createCheckout = async (req, res) => {
 
   const currentCart = await Cart.findOne({ user: currentUser._id }).populate("products.product");
 
-  // const customer = await stripe.customers.create();
-
-  // const paymentIntent = await stripe.paymentIntents.create({
-  //   customer: customer.id,
-  //   setup_future_usage: "off_session",
-  //   amount: calculateAmount(currentCart.products),
-  //   currency: "MXN",
-  // });
-
   res.render("checkout/checkout", {
     cart: currentCart,
   });
@@ -33,15 +24,20 @@ const submitCheckout = async (req, res) => {
   try {
     const token = req.body.stripeToken; // Using Express
 
+    const currentUser = req.session.currentUser;
+
+    const currentCart = await Cart.findOne({ user: currentUser._id }).populate("products.product");
     const charge = await stripe.charges.create({
-      amount: 999,
-      currency: "usd",
+      amount: calculateAmount(currentCart.products),
+      currency: "mxn",
       description: "Example charge",
       source: token,
     });
 
     res.status(200).json(charge);
-  } catch (error) {}
+  } catch (error) {
+    res.status(200).json(error.message);
+  }
 };
 
 module.exports = {

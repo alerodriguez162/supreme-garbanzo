@@ -33,10 +33,10 @@ hbs.registerHelper("formatDate", function (dateString) {
 
 app.locals.title = `${capitalized(projectName)}`;
 
-// app.use((req, res, next) => {
-//   res.locals.currentUser = req.session.currentUser;
-//   next();
-// });
+app.use((req, res, next) => {
+  res.locals.currentUser = req.session.currentUser;
+  next();
+});
 
 // 👇 Start handling routes here
 const index = require("./routes/index.routes");
