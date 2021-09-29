@@ -24,7 +24,7 @@ const postLogin = async (req, res) => {
       await Cart.create({
         user: foundUser._id,
         status: 0,
-        items: [],
+        products: [],
       });
     }
     res.redirect("/");

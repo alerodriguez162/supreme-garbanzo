@@ -2,7 +2,7 @@ const Product = require("../models/Product.model");
 const Cart = require("../models/Cart.model");
 
 const addToCart = async (req, res) => {
-  const { product, quantity } = req.body;
+  const { productId, quantity } = req.body;
 
   const currentUser = req.session.currentUser;
 
@@ -10,8 +10,8 @@ const addToCart = async (req, res) => {
     { user: currentUser._id },
     {
       $set: {
-        items: {
-          product: product,
+        products: {
+          product: productId,
           quantity: quantity,
         },
       },
@@ -23,7 +23,7 @@ const addToCart = async (req, res) => {
 
 const removeFromCart = async (req, res) => {
   try {
-    const { product } = req.body;
+    const { productId } = req.body;
 
     const currentUser = req.session.currentUser;
 
@@ -31,8 +31,8 @@ const removeFromCart = async (req, res) => {
       { user: currentUser._id },
       {
         $pull: {
-          items: {
-            product: product,
+          products: {
+            product: productId,
           },
         },
       },
@@ -50,7 +50,7 @@ const getCart = async (req, res) => {
   try {
     const currentUser = req.session.currentUser;
 
-    const cartFind = await Cart.findOne({ user: currentUser._id }).populate("items.product");
+    const cartFind = await Cart.findOne({ user: currentUser._id }).populate("products.product");
 
     res.status(200).json(cartFind);
   } catch (error) {}
@@ -64,7 +64,7 @@ const clearCart = async (req, res) => {
       { user: currentUser._id },
       {
         $set: {
-          items: [],
+          products: [],
         },
       },
       { new: true }
