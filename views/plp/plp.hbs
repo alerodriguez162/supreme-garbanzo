@@ -1,9 +1,16 @@
 {{> header}}
 <div class="container">
+    {{#if products}}
     <div class="row">
         {{#each products}}
         {{> productCard this}}
         {{/each}}
     </div>
+    {{else}}
+    <div class="d-flex flex-column align-items-center">
+        <img src="/images/results.png" alt="" class="img-fluid">
+        <h2>No se encontraron resultados </h2>
+    </div>
+    {{/if}}
 </div>
 {{> footer}}

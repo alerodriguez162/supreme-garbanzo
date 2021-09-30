@@ -13,8 +13,8 @@
                 <li><a href="/cart" class="nav-link px-2 link-dark">Cart</a></li>
             </ul>
 
-            <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">
-                <input type="search" class="form-control" placeholder="Search..." aria-label="Search">
+            <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" action="/plp" method="get">
+                <input type="search" class="form-control" name="search" placeholder="Search..." aria-label="Search">
             </form>
 
             {{#if currentUser}}
@@ -29,7 +29,9 @@
                     <li>
                         <hr class="dropdown-divider">
                     </li>
-                    <li><a class="dropdown-item" href="#">Sign out</a></li>
+                    <li>
+                        <form action="/auth/logout" method="post"> <button class="dropdown-item" type="submit">Sign out</button></form>
+                    </li>
                 </ul>
             </div>
             {{else}}
