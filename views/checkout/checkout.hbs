@@ -42,7 +42,7 @@
                 <div class="row g-3">
                     <div class="col-sm-6">
                         <label for="firstName" class="form-label">Nombre</label>
-                        <input type="text" class="form-control" id="firstName" placeholder="Cosme" value="" required>
+                        <input type="text" class="form-control" id="firstName" name="firstName" placeholder="Cosme" value="" required>
                         <div class="invalid-feedback">
                             El nombre es requerido.
                         </div>
@@ -50,7 +50,7 @@
 
                     <div class="col-sm-6">
                         <label for="lastName" class="form-label">Apellido</label>
-                        <input type="text" class="form-control" id="lastName" placeholder="Fulanito" value="" required>
+                        <input type="text" class="form-control" id="lastName" name="lastName" placeholder="Fulanito" value="" required>
                         <div class="invalid-feedback">
                             El apellido es requerido.
                         </div>
@@ -59,7 +59,7 @@
 
                     <div class="col-12">
                         <label for="email" class="form-label">Email </label>
-                        <input type="email" class="form-control" id="email" placeholder="you@ejemplo.com" required>
+                        <input type="email" class="form-control" id="email" name="email" placeholder="you@ejemplo.com" required>
                         <div class="invalid-feedback">
                             El Email es requerido.
                         </div>
@@ -67,7 +67,7 @@
 
                     <div class="col-12">
                         <label for="address" class="form-label">Direccion</label>
-                        <input type="text" class="form-control" id="address" placeholder="1234 Main St" required>
+                        <input type="text" class="form-control" id="address" name="address" placeholder="1234 Main St" required>
                         <div class="invalid-feedback">
                             Por favor ingrese una direccion valida.
                         </div>
@@ -75,7 +75,7 @@
 
                     <div class="col-12">
                         <label for="address2" class="form-label">Direccion 2 <span class="text-muted">(Optional)</span></label>
-                        <input type="text" class="form-control" id="address2" placeholder="Apartamento o suite">
+                        <input type="text" class="form-control" id="address2" name="address2" placeholder="Apartamento o suite">
                     </div>
 
                     <div class="col-md-5">
@@ -87,7 +87,7 @@
 
                     <div class="col-md-4">
                         <label for="state" class="form-label">Estado </label>
-                        <input type="text" class="form-control" id="state" placeholder="Estado" required>
+                        <input type="text" class="form-control" id="state" name="state" placeholder="Estado" required>
                         <div class="invalid-feedback">
                             Por favor ingrese un estado valido.
                         </div>
@@ -95,7 +95,7 @@
 
                     <div class="col-md-3">
                         <label for="zip" class="form-label">Codigo Postal</label>
-                        <input type="text" class="form-control" id="zip" placeholder="09000" required>
+                        <input type="text" class="form-control" id="zip" name="zip" placeholder="09000" required>
                         <div class="invalid-feedback">
                             Por favor ingrese un codigo postal valido.
                         </div>
@@ -105,7 +105,7 @@
                 <hr class="my-4">
 
                 <div class="form-check">
-                    <input type="checkbox" class="form-check-input" id="same-address" required>
+                    <input type="checkbox" class="form-check-input" id="same-address" name="sameAddress" required>
                     <label class="form-check-label" for="same-address">Direccion de facturacion misma que envio?</label>
                 </div>
 
@@ -136,7 +136,7 @@
                 <div class="row gy-3">
                     <div class="col-md-6">
                         <label for="cc-name" class="form-label">Nombre en la tarjeta</label>
-                        <input type="text" class="form-control" id="cc-name" placeholder="Cosme Fulanito" required>
+                        <input type="text" class="form-control" id="cc-name" name="cardName" placeholder="Cosme Fulanito" required>
                         <small class="text-muted">Nombre completo que aparece en la tarjeta</small>
                         <div class="invalid-feedback">
                             El nombre en la tarjeta es obligatorio
