@@ -11,13 +11,20 @@ const calculateAmount = (items) => {
 };
 
 const createCheckout = async (req, res) => {
-  const currentUser = req.session.currentUser;
+  try {
+    const currentUser = req.session.currentUser;
 
-  const currentCart = await Cart.findOne({ user: currentUser._id }).populate("products.product");
+    const currentCart = await Cart.findOne({ user: currentUser._id }).populate(
+      "products.product"
+    );
 
-  res.render("checkout/checkout", {
-    cart: currentCart,
-  });
+    res.render("checkout/checkout", {
+      products: currentCart.products,
+      total: calculateAmount(currentCart.products),
+    });
+  } catch (error) {
+    res.status(500).json(error.message);
+  }
 };
 
 const submitCheckout = async (req, res) => {
