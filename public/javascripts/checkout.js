@@ -52,6 +52,23 @@ document.addEventListener(
     });
     cardCvcElement.mount("#card-cvc-element");
     cardCvcElement.on("change", handleError.bind(this, "cardCvc"));
+
+    const form = document.getElementById("payment-form");
+
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
+
+      const { token, error } = await stripe.createToken(cardNumberElement);
+
+      if (!error) {
+        // const hiddenInput = document.createElement("input");
+        // hiddenInput.setAttribute("type", "hidden");
+        // hiddenInput.setAttribute("name", "stripeToken");
+        // hiddenInput.setAttribute("value", token.id);
+        // form.appendChild(hiddenInput);
+        form.submit();
+      }
+    });
   },
   false
 );
@@ -60,12 +77,21 @@ const handleError = (element, event) => {
     switch (element) {
       case "cardElement":
         cardError = event.error.message;
+        const containerCard = document.getElementById("card-number-element").parentNode;
+        containerCard.classList.add("input-card-invalid");
+        containerCard.classList.remove("input-card-valid");
         break;
       case "cardExpiry":
         cardExpiryError = event.error.message;
+        const containerExp = document.getElementById("card-expiry-element").parentNode;
+        containerExp.classList.add("input-card-invalid");
+        containerExp.classList.remove("input-card-valid");
         break;
       case "cardCvc":
         cardCvcError = event.error.message;
+        const containercvv = document.getElementById("card-cvc-element").parentNode;
+        containercvv.classList.add("input-card-invalid");
+        containercvv.classList.remove("input-card-valid");
         break;
       default:
         error = "Error";
@@ -74,29 +100,23 @@ const handleError = (element, event) => {
   } else {
     switch (element) {
       case "cardElement":
-        cardError = "";
+        const containerCard = document.getElementById("card-number-element").parentNode;
+        containerCard.classList.remove("input-card-invalid");
+        containerCard.classList.add("input-card-valid");
         break;
       case "cardExpiry":
-        cardExpiryError = "";
+        const containerExp = document.getElementById("card-expiry-element").parentNode;
+        containerExp.classList.remove("input-card-invalid");
+        containerExp.classList.add("input-card-valid");
         break;
       case "cardCvc":
-        cardCvcError = "";
+        const containercvv = document.getElementById("card-cvc-element").parentNode;
+        containercvv.classList.remove("input-card-invalid");
+        containercvv.classList.add("input-card-valid");
         break;
       default:
         error = "";
         break;
     }
   }
-};
-const stripeTokenHandler = (token) => {
-  // Insert the token ID into the form so it gets submitted to the server
-  const form = document.getElementById("payment-form");
-  const hiddenInput = document.createElement("input");
-  hiddenInput.setAttribute("type", "hidden");
-  hiddenInput.setAttribute("name", "stripeToken");
-  hiddenInput.setAttribute("value", token.id);
-  form.appendChild(hiddenInput);
-
-  // Submit the form
-  form.submit();
 };

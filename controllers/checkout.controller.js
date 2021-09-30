@@ -22,19 +22,20 @@ const createCheckout = async (req, res) => {
 
 const submitCheckout = async (req, res) => {
   try {
-    const token = req.body.stripeToken; // Using Express
+    console.log(req.body);
+    // const token = req.body.stripeToken; // Using Express
 
-    const currentUser = req.session.currentUser;
+    // const currentUser = req.session.currentUser;
 
-    const currentCart = await Cart.findOne({ user: currentUser._id }).populate("products.product");
-    const charge = await stripe.charges.create({
-      amount: calculateAmount(currentCart.products),
-      currency: "mxn",
-      description: "Example charge",
-      source: token,
-    });
+    // const currentCart = await Cart.findOne({ user: currentUser._id }).populate("products.product");
+    // const charge = await stripe.charges.create({
+    //   amount: calculateAmount(currentCart.products),
+    //   currency: "mxn",
+    //   description: "Example charge",
+    //   source: token,
+    // });
 
-    res.status(200).json(charge);
+    res.status(200).json({ name: "success" });
   } catch (error) {
     res.status(200).json(error.message);
   }
