@@ -1,10 +1,8 @@
 const router = require("express").Router();
 const routeGuards = require("../middlewares/route-guard");
-//const controller    = require("./../controllers/")
+const homeController = require("./../controllers/home.controller");
 
 /* GET home page */
-router.get("/", (req, res, next) => {
-  res.render("index");
-});
+router.get("/", homeController.getHomePage);
 
 module.exports = router;

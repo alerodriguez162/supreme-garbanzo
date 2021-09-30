@@ -3,39 +3,91 @@ document.addEventListener(
   () => {
     var stripe = Stripe("pk_test_51JepqlLgq45lVl8o7s42FbBEhq2DiYoPp5vov3AlARVkZvKFtclJeFLCgpQTD3Yhnf97Eg6PABg9JB15UIXgjT1w00tFQqiGgs");
     const elements = stripe.elements();
-    // Custom styling can be passed to options when creating an Element.
-    const style = {
-      base: {
-        // Add your base input styles here. For example:
-        fontSize: "16px",
-        color: "#32325d",
+    let cardNumberElement = elements.create("cardNumber", {
+      style: {
+        base: {
+          fontSize: "16px",
+          lineHeight: "24px",
+          "::placeholder": {
+            color: "#6c757d",
+            fontFamily: "inherit",
+          },
+        },
       },
-    };
-
-    // Create an instance of the card Element.
-    const card = elements.create("card", { style });
-
-    // Add an instance of the card Element into the `card-element` <div>.
-    card.mount("#card-element");
-    const form = document.getElementById("payment-form");
-    form.addEventListener("submit", async (event) => {
-      event.preventDefault();
-
-      const { token, error } = await stripe.createToken(card);
-
-      if (error) {
-        // Inform the customer that there was an error.
-        const errorElement = document.getElementById("card-errors");
-        errorElement.textContent = error.message;
-      } else {
-        // Send the token to your server.
-        stripeTokenHandler(token);
-      }
+      placeholder: "Numero de tarjeta",
     });
+    cardNumberElement.mount("#card-number-element");
+    cardNumberElement.on("change", handleError.bind(this, "cardElement"));
+
+    let cardExpiryElement = elements.create("cardExpiry", {
+      style: {
+        base: {
+          height: "50px",
+          lineHeight: "24px",
+          fontSize: "16px",
+          "::placeholder": {
+            color: "#6c757d",
+            fontFamily: "inherit",
+          },
+        },
+      },
+      placeholder: "Expiracion de tarjeta",
+    });
+    cardExpiryElement.mount("#card-expiry-element");
+    cardExpiryElement.on("change", handleError.bind(this, "cardExpiry"));
+
+    let cardCvcElement = elements.create("cardCvc", {
+      style: {
+        base: {
+          height: "100px",
+          fontSize: "16px",
+          lineHeight: "24px",
+          "::placeholder": {
+            color: "#6c757d",
+            fontFamily: "inherit",
+          },
+        },
+      },
+      placeholder: "CVV",
+    });
+    cardCvcElement.mount("#card-cvc-element");
+    cardCvcElement.on("change", handleError.bind(this, "cardCvc"));
   },
   false
 );
-
+const handleError = (element, event) => {
+  if (event.error) {
+    switch (element) {
+      case "cardElement":
+        cardError = event.error.message;
+        break;
+      case "cardExpiry":
+        cardExpiryError = event.error.message;
+        break;
+      case "cardCvc":
+        cardCvcError = event.error.message;
+        break;
+      default:
+        error = "Error";
+        break;
+    }
+  } else {
+    switch (element) {
+      case "cardElement":
+        cardError = "";
+        break;
+      case "cardExpiry":
+        cardExpiryError = "";
+        break;
+      case "cardCvc":
+        cardCvcError = "";
+        break;
+      default:
+        error = "";
+        break;
+    }
+  }
+};
 const stripeTokenHandler = (token) => {
   // Insert the token ID into the form so it gets submitted to the server
   const form = document.getElementById("payment-form");

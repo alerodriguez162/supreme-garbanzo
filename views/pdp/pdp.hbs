@@ -1,1 +1,35 @@
-<div>Soy un pdp en construccion</div>
+{{> header}}
+<section class="py-5 ">
+    <div class="container px-4 px-lg-5 my-5">
+        <div class="row gx-4 gx-lg-5 align-items-center">
+            <div class="col-md-6"><img class="card-img-top mb-5 mb-md-0" src="{{image}}" alt="..."></div>
+            <div class="col-md-6">
+                <div class="small mb-1">{{_id}}</div>
+                <h1 class="display-5 fw-bolder">{{title}}</h1>
+                <div class="fs-5 mb-5">
+                    {{!-- <span class="text-decoration-line-through">${{price}}</span> --}}
+                    <span>${{price}}</span>
+                </div>
+                <p class="lead">{{description}}</p>
+                <div class="d-flex">
+                    {{#ifCond stock 0}}
+                    <button disabled class="btn btn-outline-dark flex-shrink-0" type="submit">
+                        <i class="fas fa-cart-plus"></i>
+                        <span class="ms-2">No hay stock</span>
+                    </button>
+                    {{else}}
+                    <form action="/cart/add" method="post" class="d-flex">
+                        <input type="text" name="productId" id="productId" class="invisible form-control w-0 h-0 p-0" value="{{_id}}">
+                        <input class="form-control text-center me-3" id="quantity" name="quantity" type="number" max="{{stock}}" style="max-width: 3rem">
+                        <button class="btn btn-outline-dark flex-shrink-0" type="submit">
+                            <i class="fas fa-cart-plus"></i>
+                            <span class="ms-2">Add to cart</span>
+                        </button>
+                    </form>
+                    {{/ifCond}}
+                </div>
+            </div>
+        </div>
+    </div>
+</section><!-- Related items section-->
+{{> footer}}

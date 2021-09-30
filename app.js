@@ -27,8 +27,11 @@ const capitalized = (string) => string[0].toUpperCase() + string.slice(1).toLowe
 
 hbs.registerPartials(__dirname + "/views/partials");
 
-hbs.registerHelper("formatDate", function (dateString) {
-  return new hbs.SafeString(moment().startOf(moment(dateString).format("MMMM Do YYYY, h:mm:ss a")).fromNow());
+hbs.registerHelper("ifCond", function (v1, v2, options) {
+  if (v1 === v2) {
+    return options.fn(this);
+  }
+  return options.inverse(this);
 });
 
 app.locals.title = `${capitalized(projectName)}`;

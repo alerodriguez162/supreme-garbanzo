@@ -1,6 +1,4 @@
-main {
-    min-height: calc(100vh - 129px);
-}
+main {}
 
 .img-product {
     padding: 15px;
@@ -120,4 +118,80 @@ a .card-body>* {
     .featurette-heading {
         margin-top: 7rem;
     }
+}
+
+
+.bg-image-vertical {
+    position: relative;
+    overflow: hidden;
+    background-repeat: no-repeat;
+    background-position: right center;
+    background-size: auto 100%;
+}
+
+@media (min-width: 1025px) {
+    .h-custom-2 {
+        height: 100%;
+    }
+}
+
+.w-0 {
+    width: 0 !important;
+}
+
+.price {
+    font-weight: 600;
+    color: #212529;
+}
+
+.price-old {
+    color: #969696;
+    margin-left: 3px;
+    font-size: 85%;
+}
+
+.h-0 {
+    height: 0;
+}
+
+.carousel-item>img {
+    object-fit: cover;
+}
+
+.img-sm {
+    width: 80px;
+}
+
+.itemside {
+    position: relative;
+    display: flex;
+    width: 100%;
+}
+
+.itemside .aside {
+    position: relative;
+    flex-shrink: 0;
+}
+
+.itemside .info {
+    padding-left: 15px;
+    padding-right: 7px;
+}
+
+.itemside p {
+    margin-bottom: 0;
+}
+
+.itemside .title {
+    display: block;
+    margin-bottom: 5px;
+    color: #212529;
+}
+
+.itemside a.title:hover {
+    color: #3167eb;
+}
+
+a.itemside {
+    color: initial;
 }

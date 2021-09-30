@@ -1,17 +1,184 @@
 <script src="/javascripts/checkout.js"></script>
 <script src="https://js.stripe.com/v3/"></script>
-<form action="/checkout" method="post" id="payment-form">
-    <div class="form-row">
-        <label for="card-element">
-            Credit or debit card
-        </label>
-        <div id="card-element">
-            <!-- A Stripe Element will be inserted here. -->
-        </div>
 
-        <!-- Used to display Element errors. -->
-        <div id="card-errors" role="alert"></div>
+<div class="container py-5 ">
+    <div class="text-center">
+        <img class="d-block mx-auto mb-4" src="/images/icon.png" alt="" width="72" height="72">
+        <h2>Formulario de pago</h2>
+        <p class="lead">Favor de ingresar sus datos</p>
     </div>
 
-    <button>Submit Payment</button>
-</form>
+    <div class="row g-5">
+        <div class="col-md-5 col-lg-4 order-md-last">
+            <h4 class="d-flex justify-content-between align-items-center mb-3">
+                <span class="text-primary">Tu Carrito</span>
+                <span class="badge bg-primary rounded-pill">3</span>
+            </h4>
+            <ul class="list-group mb-3">
+                <li class="list-group-item d-flex justify-content-between lh-sm">
+                    <div>
+                        <h6 class="my-0">Product name</h6>
+                        <small class="text-muted">Brief description</small>
+                    </div>
+                    <span class="text-muted">$12</span>
+                </li>
+
+                <li class="list-group-item d-flex justify-content-between">
+                    <span>Total (MXN)</span>
+                    <strong>$20</strong>
+                </li>
+            </ul>
+
+            {{!-- <form class="card p-2">
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Promo code">
+                    <button type="submit" class="btn btn-secondary">Redeem</button>
+                </div>
+            </form> --}}
+        </div>
+        <div class="col-md-7 col-lg-8">
+            <h4 class="mb-3">Dirección de envio</h4>
+            <form action="/checkout" method="post" id="payment-form" class="needs-validation" novalidate>
+                <div class="row g-3">
+                    <div class="col-sm-6">
+                        <label for="firstName" class="form-label">Nombre</label>
+                        <input type="text" class="form-control" id="firstName" placeholder="Cosme" value="" required>
+                        <div class="invalid-feedback">
+                            El nombre es requerido.
+                        </div>
+                    </div>
+
+                    <div class="col-sm-6">
+                        <label for="lastName" class="form-label">Apellido</label>
+                        <input type="text" class="form-control" id="lastName" placeholder="Fulanito" value="" required>
+                        <div class="invalid-feedback">
+                            El apellido es requerido.
+                        </div>
+                    </div>
+
+
+                    <div class="col-12">
+                        <label for="email" class="form-label">Email </label>
+                        <input type="email" class="form-control" id="email" placeholder="you@ejemplo.com" required>
+                        <div class="invalid-feedback">
+                            El Email es requerido.
+                        </div>
+                    </div>
+
+                    <div class="col-12">
+                        <label for="address" class="form-label">Direccion</label>
+                        <input type="text" class="form-control" id="address" placeholder="1234 Main St" required>
+                        <div class="invalid-feedback">
+                            Por favor ingrese una direccion valida.
+                        </div>
+                    </div>
+
+                    <div class="col-12">
+                        <label for="address2" class="form-label">Direccion 2 <span class="text-muted">(Optional)</span></label>
+                        <input type="text" class="form-control" id="address2" placeholder="Apartamento o suite">
+                    </div>
+
+                    <div class="col-md-5">
+                        <label for="country" class="form-label">Country</label>
+                        <select class="form-select" id="country" disabled>
+                            <option default>Mexico</option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-4">
+                        <label for="state" class="form-label">Estado </label>
+                        <input type="text" class="form-control" id="state" placeholder="Estado" required>
+                        <div class="invalid-feedback">
+                            Por favor ingrese un estado valido.
+                        </div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <label for="zip" class="form-label">Codigo Postal</label>
+                        <input type="text" class="form-control" id="zip" placeholder="09000" required>
+                        <div class="invalid-feedback">
+                            Por favor ingrese un codigo postal valido.
+                        </div>
+                    </div>
+                </div>
+
+                <hr class="my-4">
+
+                <div class="form-check">
+                    <input type="checkbox" class="form-check-input" id="same-address" required>
+                    <label class="form-check-label" for="same-address">Direccion de facturacion misma que envio?</label>
+                </div>
+
+                {{!-- <div class="form-check">
+                    <input type="checkbox" class="form-check-input" id="save-info">
+                    <label class="form-check-label" for="save-info">Save this information for next time</label>
+                </div> --}}
+
+                <hr class="my-4">
+
+                <h4 class="mb-3">Forma de pago</h4>
+
+                {{!-- <div class="my-3">
+                    <div class="form-check">
+                        <input id="credit" name="paymentMethod" type="radio" class="form-check-input" checked required>
+                        <label class="form-check-label" for="credit">Credit card</label>
+                    </div>
+                    <div class="form-check">
+                        <input id="debit" name="paymentMethod" type="radio" class="form-check-input" required>
+                        <label class="form-check-label" for="debit">Debit card</label>
+                    </div>
+                    <div class="form-check">
+                        <input id="paypal" name="paymentMethod" type="radio" class="form-check-input" required>
+                        <label class="form-check-label" for="paypal">PayPal</label>
+                    </div>
+                </div> --}}
+
+                <div class="row gy-3">
+                    <div class="col-md-6">
+                        <label for="cc-name" class="form-label">Nombre en la tarjeta</label>
+                        <input type="text" class="form-control" id="cc-name" placeholder="Cosme Fulanito" required>
+                        <small class="text-muted">Nombre completo que aparece en la tarjeta</small>
+                        <div class="invalid-feedback">
+                            El nombre en la tarjeta es obligatorio
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label for="cc-number" class="form-label">Número de tarjeta</label>
+                        <div class="form-control">
+                            <div id="card-number-element"></div>
+                        </div>
+                        <div class="invalid-feedback" id="card-number-element-feedback">
+
+                        </div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <label for="cc-expiration" class="form-label">Caducidad</label>
+                        <div class="form-control">
+                            <div id="card-expiry-element"></div>
+                        </div>
+                        <div class="invalid-feedback" id="card-expiry-element-feedback">
+
+                        </div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <label for="cc-cvv" class="form-label">CVV</label>
+                        <div class="form-control">
+                            <div id="card-cvc-element"></div>
+                        </div>
+                        <div class="invalid-feedback" id="card-cvc-element-feedback">
+
+                        </div>
+                    </div>
+                    {{!-- <div id="card-errors" role="alert"></div> --}}
+                </div>
+
+                <hr class="my-4">
+
+                <button class="w-100 btn btn-primary btn-lg" type="submit">Continue to checkout</button>
+            </form>
+        </div>
+    </div>
+</div>
